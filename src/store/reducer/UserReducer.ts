@@ -1,6 +1,6 @@
 
 const INITIAL_STATE = {
-  userList: ['TEST']
+  page: 1
 }
 
 type Action  = {
@@ -10,9 +10,9 @@ type Action  = {
 
 export default (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
-    case 'GET':
+    case 'PAGE':
       return {
-        userList: action.payload,
+        page: action.payload,
       }
     default:
       return state

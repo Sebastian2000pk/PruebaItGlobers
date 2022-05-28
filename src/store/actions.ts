@@ -30,13 +30,11 @@ export const Logout = (): any => {
   }
 };
 
-export const GetUsers = (): any => {
+export const SetPageAction = (data: any): any => {
   return async (dispatch: Dispatch<AnyAction>) => {
 
-    const data = await AsyncStorage.getItem('users');
-
     dispatch({
-      type: "GET",
+      type: "PAGE",
       payload: data,
     });
   }
