@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { Login } from "../../store/actions";
 
-const LoginScreen = () => {
+// Componets
+import CustomInput from "../../components/CustomInput";
+import CustonButton from "../../components/CustomButton";
+
+type Props = {
+  navigation: any;
+};
+
+const LoginScreen = ({ navigation }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -14,54 +22,48 @@ const LoginScreen = () => {
     }
   };
 
+  const pressRegister = () => {
+    navigation.navigate("Register")
+  }
+
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <Text style={styles.textLogo}>Login</Text>
-      <TextInput
-        placeholder="Email"
-        style={styles.input}
-        onChangeText={setEmail}
-      />
-      <TextInput
+      <CustomInput placeholder="Email" setState={setEmail} />
+      <CustomInput
         placeholder="Password"
-        style={styles.input}
+        setState={setPassword}
         secureTextEntry
-        onChangeText={setPassword}
       />
-      <Pressable
-        onPress={press}
-        style={({ pressed }) => [
-          {
-            backgroundColor: pressed ? "red" : "blue",
-          },
-          styles.input,
-        ]}>
-        <Text style={styles.buttonText}>Login</Text>
-      </Pressable>
+      <CustonButton text="Login" onPress={press} />
+      <View style={styles.containerSingUp}>
+        <Text style={styles.textSecondary}>Don't have an account? </Text>
+        <Pressable onPress={pressRegister}>
+          <Text style={styles.textPrimary}>Sign Up</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  containerSingUp: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 10,
+  },
   textLogo: {
     textAlign: "center",
     marginTop: 50,
     fontSize: 30,
     fontWeight: "bold",
   },
-  input: {
-    padding: 10,
-    paddingHorizontal: 20,
-    margin: 10,
-    borderRadius: 5,
-    alignItems: "center",
+  textSecondary: {
+    color: "#99a1b1",
   },
-  buttonText: {
-    color: "white",
+  textPrimary: {
+    color: "#0041c4",
     fontWeight: "bold",
-  },
-  buttonPressed: {
-    backgroundColor: "red",
   },
 });
 
