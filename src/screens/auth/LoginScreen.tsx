@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
-import { Login } from "../../store/actions";
+import { LoginAction } from "../../store/actions";
+
+// Services
+import { loginService } from "../../services/authService";
 
 // Componets
 import CustomInput from "../../components/CustomInput";
 import CustonButton from "../../components/CustomButton";
+
+// Hooks
+import { encrypt } from '../../hooks/crypto';
 
 type Props = {
   navigation: any;
@@ -14,17 +20,31 @@ type Props = {
 const LoginScreen = ({ navigation }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const dispatch = useDispatch();
 
   const press = async () => {
     if (email && password) {
-      dispatch(Login(email, password));
+      const dataLogin = {
+        email: email,
+        password: password
+      }
+
+      const emailEncrypt = encrypt(email);
+
+      loginService(dataLogin).then(res => {
+        dispatch(LoginAction(res.data.token, emailEncrypt));
+
+      }).catch(err => {
+        console.warn("Usuario o contraseña incorrectos");
+      });
     }
   };
 
   const pressRegister = () => {
     navigation.navigate("Register")
   }
+
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>

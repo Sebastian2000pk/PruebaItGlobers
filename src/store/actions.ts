@@ -3,16 +3,18 @@ import { Dispatch, AnyAction } from "redux";
 
 
 
-export const Login = (email: string, password: string): any => {
+export const LoginAction = (token: string, email: string): any => {
   return async (dispatch: Dispatch<AnyAction>) => {
-    if (!email || !password) return;
+    if (!token || !email) return;
 
-    const token = email + password;
     await AsyncStorage.setItem("token", token);
 
     dispatch({
       type: "LOGIN",
-      payload: token,
+      payload: {
+        token: token,
+        email: email
+      },
     });
   }
 };
