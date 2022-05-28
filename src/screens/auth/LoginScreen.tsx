@@ -11,7 +11,7 @@ import CustomInput from "../../components/CustomInput";
 import CustonButton from "../../components/CustomButton";
 
 // Hooks
-import { encrypt } from '../../hooks/crypto';
+import { encryptText } from '../../hooks/crypto';
 
 type Props = {
   navigation: any;
@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }: Props) => {
         password: password
       }
 
-      const emailEncrypt = encrypt(email);
+      const emailEncrypt = encryptText(email);
 
       loginService(dataLogin).then(res => {
         dispatch(LoginAction(res.data.token, emailEncrypt));
