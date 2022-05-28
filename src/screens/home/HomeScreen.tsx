@@ -38,7 +38,7 @@ const HomeScreen = () => {
         setUserList(res.data.data);
       })
       .catch((err) => {
-        console.warn("Usuario o contraseña incorrectos");
+        console.warn(err);
       });
   };
 

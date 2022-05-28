@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = "https://reqres.in/api";
+import enviroment from "../env/enviroment";
 
 type User = {
   email: string;
@@ -8,9 +8,9 @@ type User = {
 }
 
 export const loginService = async (data: User) => {
-  return await axios.post(baseUrl + '/login', data);
+  return await axios.post(enviroment.baseUrl + '/login', data);
 }
 
 export const registerService = async (data: User) => {
-  return await axios.post(baseUrl + '/register', data);
+  return await axios.post(enviroment.baseUrl + '/register', data);
 }
